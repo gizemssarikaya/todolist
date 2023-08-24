@@ -53,14 +53,13 @@ class DatabaseHelper {
                       )''');
   }
 
-// FOREIGN KEY(dutyTypeid) REFERENCES gorev_type(id) ON DELETE ON ACTION CASCADE
-  static Future<int> insert_gorev(Gorev gorev) async {
+  static Future<int> insertGorev(Gorev gorev) async {
     Database db = await getDatabaseInstance;
 
     return await db.insert(tablegorevAdi, gorev.toJSon());
   }
 
-  static Future<int> insert_type(GorevType type) async {
+  static Future<int> insertType(GorevType type) async {
     Database db = await getDatabaseInstance;
     return await db.insert(tabletype, type.toJson());
   }

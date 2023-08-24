@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -65,15 +64,15 @@ class HomeController extends GetxController {
 
   String? validateGorevText(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Görev türü boş bırakılamaz!';
+      return 'Görev türü boş birakilamaz!';
     }
-
+    // ignore: unnecessary_null_comparison
     if (value != null && value.length <= 4) {
-      return 'Görev adı 5 karakterden az olamaz!';
+      return 'Görev adi 5 karakterden az olamaz!';
     }
 
     if (currentDutyType == null) {
-      return 'Görev türü seçiniz.';
+      return 'Görev türü seçiniz!';
     }
 
     return null;
@@ -101,7 +100,7 @@ class HomeController extends GetxController {
   Future<void> addtoGorevType() async {
     final name = gorevTypeTextController.text;
     final type = GorevType(null, name: name);
-    await DatabaseHelper.insert_type(type);
+    await DatabaseHelper.insertType(type);
 
     currentDutyType = null;
     await loadDutyTypeList();
@@ -139,7 +138,7 @@ class HomeController extends GetxController {
       String name = gorevTextController.text;
       int? id = currentDutyType!.id;
       final gorev = Gorev(name: name, durum: false, dutyTypeid: id!);
-      await DatabaseHelper.insert_gorev(gorev);
+      await DatabaseHelper.insertGorev(gorev);
       currentDutyType = null;
       FocusScope.of(Get.context!).unfocus();
       loadDutyList();
@@ -167,10 +166,11 @@ class HomeController extends GetxController {
 
   String? completedDutyWrite() {
     if (completedTodosCount == 0) {
-      return 'Hiç görev tamamlanmadı.';
+      return 'Hiç görev tamamlanmadi.';
     } else if (completedTodosCount != 0) {
-      return '$completedTodosCount tamamlandı.';
+      return '$completedTodosCount tamamlandi.';
     }
+    return null;
   }
 
   void checkCompletedDuties() {
@@ -215,13 +215,7 @@ class HomeController extends GetxController {
     dutyList.refresh();
   }
 
-  bool? changeDutyDurumType(Gorev gorev) {
-    if (gorev.durum == 0) {
-      return false;
-    } else if (gorev.durum == 1) {
-      return true;
-    }
-  }
+  
 
   Future<void> changeDutyComplete(Gorev gorev) async {
     gorev.durum = !gorev.durum;
